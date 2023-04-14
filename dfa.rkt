@@ -141,6 +141,7 @@ Mario Ignacio Frias Pina
 			[else (values 'inv #f)])]
 		[(eq? state 'spa_op) (cond
 			[(eq? char #\() (values 'par_open #f)]
+			[(eq? char #\)) (values 'par_close #f)]
 			[(or (eq? char #\+) (eq? char #\-)) (values 'sign #f)]
 			[(or (char-alphabetic? char) (eq? char #\_)) (values 'var #f)]
 			[(char-numeric? char) (values 'int #f)]
@@ -148,6 +149,7 @@ Mario Ignacio Frias Pina
 			[else (values 'inv #f)])]
 		[(eq? state 'par_open) (cond
 			[(or (char-alphabetic? char) (eq? char #\_)) (values 'var 'par_open)]
+			[(eq? char #\)) (values 'par_close 'par_open)]
 			[(or (eq? char #\+) (eq? char #\-)) (values 'sign 'par_open)]
 			[(char-numeric? char) (values 'int 'par_open)]
 			[(char-whitespace? char) (values 'spa_op 'par_open)]
