@@ -4,6 +4,7 @@ Validate the components of a string
 
 3/17/2023
 Mario Ignacio Frias Pina
+Alan Anthony Hernadez Perez
 |#
 
 #lang racket
