@@ -40,7 +40,7 @@ class int,float,exp,var,spa,par_close accept
 start-->|digit|int;
 start-->|+,-|sign;
 start-->|letter,_|var;
-start-->|(|par_open;
+start-->|par_op|par_open;
 sign-->|digit|int;
 int-->|digit|int;
 int-->|.|dot;
