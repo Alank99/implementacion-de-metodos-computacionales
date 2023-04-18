@@ -54,7 +54,7 @@ div-->|par_open|par_open
 div-->|digit|int
 div-->|+,-|sign
 div-->|letter|var
-div-->|space|spa_op
+div-->|space|o_spa
 
 comment-->|"\n"|start
 
