@@ -61,7 +61,6 @@ int-->|e,E|e;
 int-->|+,-,*,/,=|op
 int-->|space|spa
 int-->|par close|par_close
-int-->||
 dot-->|digit|float;
 float-->|digit|float;
 float-->|e,E|e;
