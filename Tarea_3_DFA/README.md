@@ -31,22 +31,37 @@ spa((spa))
 o_spa((o_spa))
 par_open((par_open))
 par_close((par_close))
+first((first))
+comment((comment))
+div((div))
+
 
 %% Node types
 class start initial
-class int,float,exp,var,spa,par_close accept
+class int,float,exp,var,spa,par_close,comment accept
 
 %% The graph
 start-->|digit|int;
 start-->|+,-|sign;
 start-->|letter,_|var;
 start-->|par_op|par_open;
+start-->|/|first
+start-->|space|start
+first-->|/|comment
+div-->|/|comment
+div-->|par_open|par_open
+div-->|+,-|sign
+div-->|letter|var
+div-->|space|spa_op
+comment-->|"\n"|start
 sign-->|digit|int;
 int-->|digit|int;
 int-->|.|dot;
 int-->|e,E|e;
 int-->|+,-,*,/,=|op
 int-->|space|spa
+int-->|par close|par_close
+int-->||
 dot-->|digit|float;
 float-->|digit|float;
 float-->|e,E|e;
@@ -69,7 +84,14 @@ spa-->|+,-,*,/,=|op
 o_spa-->|+,-|sign
 o_spa-->|digit|int
 o_spa-->|letter,_|var
-
+par_open-->|Letter,_|var
+par_open-->|par close|par_close
+par_open-->|+,-|sign
+par_open-->|digit|int
+par_open-->|space|o_spa
+par_close-->|"/"|div
+par_close-->|+,-,*,/,=|op
+par_close-->|space|spa
 ```
 
 Drawn with the tool https://madebyevan.com/fsm/

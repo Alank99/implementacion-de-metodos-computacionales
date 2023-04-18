@@ -77,7 +77,7 @@ Alan Anthony Hernadez Perez
 			[(eq? char #\() (values 'par_open 'op)]
 			[(char-numeric? char) (values 'int 'op)]
 			[(or (eq? char #\+) (eq? char #\-)) (values 'sign 'op)]
-			[(char-alphabetic? char) (values 'id 'op)]
+			[(char-alphabetic? char) (values 'var 'op)]
 			[(char-whitespace? char) (values 'spa_op 'op)]
 			[else (values 'inv #f)])]
 		[(eq? state 'comment) (cond
