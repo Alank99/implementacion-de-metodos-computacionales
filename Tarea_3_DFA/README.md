@@ -34,7 +34,7 @@ par_close((par_close))
 first((first))
 comment((comment))
 div((div))
-
+id
 
 %% Node types
 class start initial
@@ -89,7 +89,7 @@ par_open-->|par close|par_close
 par_open-->|+,-|sign
 par_open-->|digit|int
 par_open-->|space|o_spa
-par_close-->|"/"|div
+par_close-->|/|div
 par_close-->|+,-,*,/,=|op
 par_close-->|space|spa
 ```
