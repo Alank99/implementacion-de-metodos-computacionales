@@ -34,7 +34,7 @@ par_close((par_close))
 first((first))
 comment((comment))
 div((div))
-id
+
 
 %% Node types
 class start initial
