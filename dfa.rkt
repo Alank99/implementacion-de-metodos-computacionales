@@ -15,6 +15,7 @@ Mario Ignacio Frias Pina
 ;Creates a structure with the 5 values in a DFA machine
 (struct dfa (func init final))
 
+;Function that is called by the user that needs only the string
 (define (arithmetic-lexer str)
 	(validate-dfa str (dfa delta-dfa 'start '(comment int float exp op var simb spa spa_op par_close))))
 
@@ -28,21 +29,30 @@ Mario Ignacio Frias Pina
 	  ;Current token
 	  [curr '()])
 	 (cond 
+	  ;If it is the end of the string
 	  [(empty? str)
+	  	;If it is a valid ending state
 	  	(if (member state (dfa-final machine))
+		 	;If the current token is an empty string, so that it either adds it to list or not
 		 	(if (empty? curr)
 				(reverse lst)
 				(reverse (cons (list (list->string (reverse curr)) state) lst)))
 			#f)]
+	  ;If it is not the end of the string
 	  [else
+	  	;Divides the tuple that the machine gives into 2 different 'variables'
 	  	(let-values
 		 ([(new-state found) ((dfa-func machine) state (car str))])
 	  	 (loop
+		  	;Goes to the next character of the string
 		  	(cdr str)
+			;Goes to the new state returned by the machine
 		  	new-state
+			;If the state recieved is a valid one, add it to the list
 		 	(if found
 		  		(cons (list (list->string (reverse curr)) found) lst)
 				lst)
+			;If the state recieved is a valid one, clear the current token value
  			(if found
 				(if (or (eq? new-state 'comment) (not (char-whitespace? (car str))))
 		  			(cons (car str) '())
@@ -52,12 +62,13 @@ Mario Ignacio Frias Pina
 					curr))
 		 ))])))
 
+;Function that returns if a character is an operator, except for /
 (define (char-operator? char)
-	(member char (string->list "^+=-*/%")))
+	(member char (string->list "^+=-*%")))
 
 ; Accept expressions of different types
 ; Start state: 'start
-; Accept states: 'int 'float
+; Accept states: '(comment int float exp op var simb spa spa_op par_close)
 (define (delta-dfa state char)
    (cond
 	    [(eq? state 'start) (cond
