@@ -4,6 +4,7 @@ Validate the components of a string
 
 3/17/2023
 Mario Ignacio Frias Pina
+Alan Anthony Hernadez Perez
 |#
 
 #lang racket
@@ -42,6 +43,7 @@ Mario Ignacio Frias Pina
 	  [else
 	  	;Divides the tuple that the machine gives into 2 different 'variables'
 	  	(let-values
+		          ;   var1      var2   Call to the transition function
 		 ([(new-state found) ((dfa-func machine) state (car str))])
 	  	 (loop
 		  	;Goes to the next character of the string
@@ -87,7 +89,7 @@ Mario Ignacio Frias Pina
 			[(eq? char #\() (values 'par_open 'op)]
 			[(char-numeric? char) (values 'int 'op)]
 			[(or (eq? char #\+) (eq? char #\-)) (values 'sign 'op)]
-			[(char-alphabetic? char) (values 'id 'op)]
+			[(char-alphabetic? char) (values 'var 'op)]
 			[(char-whitespace? char) (values 'spa_op 'op)]
 			[else (values 'inv #f)])]
 		[(eq? state 'comment) (cond
