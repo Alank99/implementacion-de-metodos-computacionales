@@ -2,7 +2,7 @@
 
 The program performs the functions of an automaton as seen below, in this the structure of our finite deterministic automaton (DFA) is created, where we also declared the states of acceptance of the automaton and how it will process the states of any given string of an arithmetical expression, these will be our expressions to analyze. The program will take a character of the string and pass it to our transition function to see if it is a state of our automaton, in case of it not being a valid state, the function will return that it is an invalid state. Otherwise our transition function will accept it and send it to the next state, once it finds an acceptance state the function will return a tuple of the string and what token it represents, adding it a list of lists that is finally returned to the user.
 
-Valid arithmetic expressions
+## Valid arithmetic expressions
 
 ```mermaid
 graph TD;
@@ -118,4 +118,10 @@ par_close-->|+,-,*,/,=|op
 par_close-->|space|spa
 ```
 
+## Execution example
 
+![image](https://user-images.githubusercontent.com/93450752/233244385-7cd0a6f0-7118-42ed-b99a-8128ffa2fc42.png)
+
+![image](https://user-images.githubusercontent.com/93450752/233243942-8e8c72db-b6c8-4242-a5f9-71c958bae576.png)
+
+![image](https://user-images.githubusercontent.com/93450752/233244552-c947e9b7-cfad-47da-be99-5b89eb152caf.png)
