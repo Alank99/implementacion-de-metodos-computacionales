@@ -37,6 +37,7 @@ Alan Anthony Hernadez Perez
 			#f)]
 	  [else
 	  	(let-values
+		          ;   var1      var2   Call to the transition function
 		 ([(new-state found) ((dfa-func machine) state (car str))])
 	  	 (loop
 		  	(cdr str)

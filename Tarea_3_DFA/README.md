@@ -1,11 +1,8 @@
-# State diagrams
+# Arithmetic expressions
 
-Diagrams for the Deterministic Finite Automatons (DFA) implemented in Racket
+The program performs the functions of the automaton as seen below, in this the structure of our finite deterministic automaton (DFA) is created, where it is also declared the states of acceptance of the automaton and how it will process the states through a string, in this will be our expressions to analyze. The program will take a char of the string and pass it to our transition function to see if it is a state of our automaton, in case of not being it will return that it is a valid state the expression.
 
-Created using [Mermaid](https://mermaid.js.org/syntax/flowchart.html)
-
-
-## Arithmetic expressions
+Otherwise our transition function will accept it and send it to its next state and will return the char with its respective token through a list of lists.
 
 Valid arithmetic expressions
 
@@ -63,7 +60,7 @@ sign-->|digit|int;
 int-->|digit|int;
 int-->|.|dot;
 int-->|e,E|e;
-int-->|+,-,*,=|op
+int-->|+,-,*,/,=|op
 int-->|space|spa
 int-->|par close|par_close
 int-->|/|div
@@ -72,7 +69,7 @@ dot-->|digit|float;
 
 float-->|digit|float;
 float-->|e,E|e;
-float-->|+,-,*,=|op
+float-->|+,-,*,/,=|op
 float-->|space|spa
 float-->|/|div
 float-->|par close|par_close
@@ -83,13 +80,13 @@ e-->|digit|exp;
 e_sign-->|digit|exp;
 
 exp-->|digit|exp;
-exp-->|+,-,*,=|op
+exp-->|+,-,*,/,=|op
 exp-->|/|div
 exp-->|par close|par_close
 exp-->|space|spa
 
 var-->|letter,digit,_|var;
-var-->|+,-,*,=|op
+var-->|+,-,*,/,=|op
 var-->|/|div
 var-->|par close|par_close
 var-->|space|spa
@@ -123,6 +120,5 @@ par_close-->|+,-,*,/,=|op
 par_close-->|space|spa
 ```
 
-Drawn with the tool https://madebyevan.com/fsm/
 
 ![Arithmetic DFA](arithmetic_dfa.png)
