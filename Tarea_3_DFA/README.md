@@ -121,4 +121,3 @@ par_close-->|space|spa
 ```
 
 
-![Arithmetic DFA](arithmetic_dfa.png)
