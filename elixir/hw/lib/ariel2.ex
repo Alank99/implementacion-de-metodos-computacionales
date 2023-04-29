@@ -113,5 +113,22 @@ defmodule Hw.Ariel2 do
     defp do_encode([head | tail], new_list, curr, count), do:
       do_encode(tail, [{count, curr} | new_list], head, 1)
 
+    @doc """
+    11. encode-modified counts the number of times a value is repeated in a list,
+    and returns a list of tuples with the quantity of each different value,
+    except if the quantity is 1, then its just the value
+    """
+    def encode_modified(list), do: do_encodem(list, [], [], 0)
+
+    defp do_encodem([], [], [], 0), do: []
+    defp do_encodem([], new_list, curr, 1), do: Enum.reverse(new_list) ++ [curr]
+    defp do_encodem([], new_list, curr, count), do: Enum.reverse(new_list) ++ [{count, curr}]
+    defp do_encodem([head | tail], new_list, [], 0), do: do_encodem(tail, new_list, head, 1)
+    defp do_encodem([head | tail], new_list, curr, count) when head == curr, do:
+      do_encodem(tail, new_list, curr, count + 1)
+    defp do_encodem([head | tail], new_list, curr, 1), do:
+      do_encodem(tail, [curr | new_list], head, 1)
+    defp do_encodem([head | tail], new_list, curr, count), do:
+      do_encodem(tail, [{count, curr} | new_list], head, 1)
 
 end

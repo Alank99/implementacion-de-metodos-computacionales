@@ -115,16 +115,16 @@ defmodule Hw.Ariel2Test do
      assert Ariel2.encode([9, 9, 9, 9, 9]) == [{5, 9}]
    end
 
-  # test "test encode_modified" do
-  #   assert Ariel2.encode_modified([]) == []
-  #   assert Ariel2.encode_modified([:a]) == [:a]
+   test "test encode_modified" do
+     assert Ariel2.encode_modified([]) == []
+     assert Ariel2.encode_modified([:a]) == [:a]
 
-  #   assert Ariel2.encode_modified([:a, :a, :a, :a, :b, :c, :c, :a, :a, :d, :e, :e, :e, :e]) ==
-  #            [{4, :a}, :b, {2, :c}, {2, :a}, :d, {4, :e}]
+     assert Ariel2.encode_modified([:a, :a, :a, :a, :b, :c, :c, :a, :a, :d, :e, :e, :e, :e]) ==
+              [{4, :a}, :b, {2, :c}, {2, :a}, :d, {4, :e}]
 
-  #   assert Ariel2.encode_modified([1, 2, 3, 4, 5]) == [1, 2, 3, 4, 5]
-  #   assert Ariel2.encode_modified([9, 9, 9, 9, 9]) == [{5, 9}]
-  # end
+     assert Ariel2.encode_modified([1, 2, 3, 4, 5]) == [1, 2, 3, 4, 5]
+     assert Ariel2.encode_modified([9, 9, 9, 9, 9]) == [{5, 9}]
+   end
 
   # test "test decode" do
   #   assert Ariel2.decode([]) == []
