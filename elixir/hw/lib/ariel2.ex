@@ -1,7 +1,8 @@
 #function to practice recursion in elixir
 #based on the proposats by ariel
 #
-#alan hernandez
+#Mario Ignacio Frias Pina
+#Alan Anthony Hernadez Perez
 
 defmodule Hw.Ariel2 do
     @doc """
@@ -41,7 +42,7 @@ defmodule Hw.Ariel2 do
 
 
     @doc """
-    Prime factorization of a number
+    evolves a list containing the prime factors of n in ascending order
     """
 
 
