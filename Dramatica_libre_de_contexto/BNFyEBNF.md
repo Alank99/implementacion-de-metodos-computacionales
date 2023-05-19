@@ -12,6 +12,6 @@
 
 &lt;nombre del modulo&gt; ::=  &lt;mayuscula&gt;&lt;restos del nombre&gt;
 
-&lt;restos del nombre&gt; ::= &lt;char&gt;&lt;restos del nombre&gt;| &lt;mayuscula&gt;&lt;restos del nombre&gt;|&lt;char&gt;|&lt;mayuscula&gt;
+&lt;resto del nombre&gt; ::= &lt;char&gt;&lt;restos del nombre&gt;| &lt;mayuscula&gt;&lt;resto del nombre&gt;|&lt;char&gt;|&lt;mayuscula&gt;
 
 &lt;nombre de la funcion&gt; ::=  &lt;char&gt;&lt;nombre de la funcion&gt;|&lt;char&gt;
