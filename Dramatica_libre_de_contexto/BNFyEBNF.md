@@ -8,7 +8,7 @@
 
 &lt;parametros&gt;::= &lt;parametro&gt; | &lt;parametro&gt;, &lt;parametros&gt; 
 
-&lt;cuerpo de la funcion&gt;::=,do: &lt;codigo&gt; | do: &lt;expresiones&gt; end | when &lt;codincional&gt; , do: &lt;codigo&gt; | when &lt;codincional&gt; , do &lt;expresiones&gt; end
+&lt;cuerpo de la funcion&gt;::=,do: &lt;codigo&gt; | do &lt;expresiones&gt; end | when &lt;codincional&gt; , do: &lt;codigo&gt; | when &lt;codincional&gt; , do &lt;expresiones&gt; end
 
 &lt;nombre del modulo&gt; ::=  &lt;mayuscula&gt;&lt;restos del nombre&gt;
 
