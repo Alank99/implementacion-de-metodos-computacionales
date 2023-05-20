@@ -29,3 +29,7 @@ MODULO ::= **defmodule** NOMBRE_MODULO **do** {FUNCION} **end**
 FUNCION ::= (**def** | **defp**) NOMBRE_FUNCION '('[{PARAMETRO}]')' CUERPO_FUNCION
 
 CUERPO_FUNCION ::= **,do:**  CODIGO | **do:** {EXPRESION} **end** | **when** CONDICIONAL **, do:** CODIGO | **when** CONDICIONAL **,do** {EXPRESION} **end**
+
+NOMBRE_MODULO ::= MAYUSCULA {CHAR}
+
+NOMBRE_FUNCION ::= {CHAR}
