@@ -124,10 +124,22 @@ defmodule Resaltador do
       Regex.match?(@anyother, in_string) ->
         new_string = Regex.replace(@anyother, in_string, "", global: false)
         current = Regex.run(@anyother, in_string)
-        token(new_string, [[current | "any"] | list])
+        token(new_string, [[current | "anyohter"] | list])
       true ->
         Enum.reverse(list)
+        @doc """
+        aqui ppodriamos que al final de los strings 
+        ademas de invertir la lista pongamos esto
+        ultimotag = ["</pre>","</body>","</html>"]
+        [Enum.reverse(list) | ultimotag]
+        """
     end
   end
+ @doc """
+  posible implementacion crea una fncion anonima para que genere el span de html de esta manera
+  defp span_token(token,token_type) do
+   "<span class="token_type">token</span>"
+  end
+  """
 
 end
