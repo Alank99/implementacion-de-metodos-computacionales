@@ -1,0 +1,76 @@
+*{
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #202120;
+}
+
+.reserved{
+    font-weight: 500;
+    color: #9406a3cc;
+    text-shadow: 0 0 5px #de36fffc,
+    0 0 25px #f720e5, 
+    0 0 50px #4ef2ef,
+    0 0 100px #781df0;
+}
+
+.function{
+    font-weight: 500;
+    color: #3e46decc;
+    text-shadow: 0 0 5px #04414efc,
+    0 0 25px #1af747, 
+    0 0 50px #480dbe,
+    0 0 100px #05010a;
+}
+
+.reserved{
+    font-weight: 500;
+    color: #9406a3cc;
+    text-shadow: 0 0 5px #561563fc,
+    0 0 25px #f720e5, 
+    0 0 50px #4ef2ef,
+    0 0 100px #781df0;
+}
+
+.ids{
+    font-weight: 500;
+    color: #069e09cc;
+    text-shadow: 0 0 5px #1cd5fbfc,
+    0 0 25px #1af747, 
+    0 0 50px #f7e926,
+    0 0 100px #16e368;
+}
+
+.string{
+    font-weight: 500;
+    color: #dd1c1ccc;
+    text-shadow: 0 0 5px #1f180efc,
+    0 0 25px #c3ff0f, 
+    0 0 50px #13130b,
+    0 0 100px #1b110c;
+}
+
+.op{
+    font-weight: 500;
+    color: #f5f5f5cc;
+    text-shadow: 0 0 5px #d1c7c7fc,
+    0 0 25px #f2f5f2, 
+    0 0 50px #696868,
+    0 0 100px #a7b0ab;
+}
+
+.interger{
+    font-weight: 500;
+    color: #d543bacc;
+    text-shadow: 0 0 5px #a91cfbfc,
+    0 0 25px #4408ac, 
+    0 0 50px #13d4e6,
+    0 0 100px #ae5af3;
+}
+
+.anyother{
+    font-weight: 500;
+    color: #f7f0f0cc;
+    text-shadow: 0 0 5px #121313fc,
+    0 0 25px #474b48, 
+    0 0 50px #3b3b38,
+    0 0 100px #383938;
+}
