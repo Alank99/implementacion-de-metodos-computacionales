@@ -5,25 +5,30 @@
 
 .res{
     font-weight: 500;
-    color: #a916bacc;
+    color: skyblue;
  
+}
+
+.com{
+    font-weight: 500;
+    color: lightgreen;
 }
 
 .fun{
     font-weight: 500;
-    color: #53b9f8cc;
+    color: yellow;
 
 }
 
 .ids{
     font-weight: 500;
-    color: #16f519cc;
+    color: white;
 
 }
 
 .str{
     font-weight: 500;
-    color: #cefb53fb;
+    color: lightsalmon;
 
 }
 
@@ -41,11 +46,11 @@
 
 .lib{
     font-weight: 500;
-    color: #c9c409cc
+    color: #c9c409cc;
 }
 
 body{
     font-weight: 500;
-    color: #f7f0f0cc;
+    color: lightgrey;
 
 }
