@@ -57,7 +57,12 @@
     0 0 100px #ae5af3;
 }
 
-.anyother{
+.lib{
+    font-weight: 500;
+    color: #c9c409cc;
+}
+
+body{
     font-weight: 500;
     color: #f7f0f0cc;
     text-shadow: 0 0 5px #121313fc,

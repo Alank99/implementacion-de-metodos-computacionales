@@ -65,9 +65,10 @@ defmodule Resaltador do
   end
 
   @reserved ~r/^auto|^double|^int|^struct|^break|^else|^long|^switch|^case|^enum|^register|^typedef|^char|^extern|^return|^union|^const|^float|^short|^unsigned|^continue|^for|^signed|^void|^default|^goto|^sizeof|^volatile|^do|^if|^static|^while|^\#include/
-  @function ~r/^[a-zA-Z_][a-zA-Z0-9_]*\(/
+  @function ~r/(^[a-zA-Z_][a-zA-Z0-9_]*)\(/
   @ids ~r/^[a-zA-Z_][a-zA-Z0-9_]*(\[\])?/
-  @string ~r/^\".*\"|^\'.*\'|^\<.*\>/
+  @string ~r/^\".*\"|^\'.*\'/
+  @lib ~r/^\<(.*)\>/
   @op ~r'^\+\+|^--|^\+=|^-=|^\*=|^\/=|^%=|^<<=|^>>=|^&=|^\|=|^\^=|^<<|^>>|^==|^!=|^<=|^>=|^&&|^\|\||^[+\-*/%&|^<>=!~?:]'
   @integer ~r/[+-]?\d+\.?\d?[eE]?[+-]?\d?/
   @whitespace ~r/^\s+/
@@ -96,42 +97,53 @@ defmodule Resaltador do
 
   defp token(in_string, list) do
     cond do
-      #Palabras reservadas
+      #Espacios
       Regex.match?(@whitespace, in_string) ->
-        new_string = Regex.replace(@whitespace, in_string, "", global: false)
-        current = Regex.run(@whitespace, in_string)
+        current = List.first(Regex.run(@whitespace, in_string))
+        new_string = String.replace_leading(in_string, current, "")
         token(new_string, [current | list])
+      #Reservadas
       Regex.match?(@reserved, in_string) ->
-        new_string = Regex.replace(@reserved, in_string, "", global: false)
-        current = Regex.run(@reserved, in_string)
+        current = List.first(Regex.run(@reserved, in_string))
+        new_string = String.replace_leading(in_string, current, "")
         token(new_string, [Enum.join(["<span class='res'>", current,"</span>"]) | list])
+      #Funciones
       Regex.match?(@function, in_string) ->
-        new_string = Regex.replace(@function, in_string, "", global: false)
-        current = Regex.run(@function, in_string)
+        current = List.last(Regex.run(@function, in_string))
+        new_string = String.replace_leading(in_string, current, "")
         token(new_string, [Enum.join(["<span class='fun'>", current,"</span>"]) | list])
+      #Librerias
+      Regex.match?(@lib, in_string) ->
+          current = Regex.run(@lib, in_string)
+          new_string = String.replace_leading(in_string, List.first(current), "")
+          token(new_string, [Enum.join(["<span class='lib'>&lt", List.last(current),"&gt</span>"]) | list])
+      #Strings
       Regex.match?(@string, in_string) ->
-        new_string = Regex.replace(@string, in_string, "", global: false)
-        current = Regex.run(@string, in_string)
+        current = List.first(Regex.run(@string, in_string))
+        new_string = String.replace_leading(in_string, current, "")
         token(new_string, [Enum.join(["<span class='str'>", current,"</span>"]) | list])
+      #Identificadores
       Regex.match?(@ids, in_string) ->
-        new_string = Regex.replace(@ids, in_string, "", global: false)
-        current = Regex.run(@ids, in_string)
+        current = List.first(Regex.run(@ids, in_string))
+        new_string = String.replace_leading(in_string, current, "")
         token(new_string, [Enum.join(["<span class='ids'>", current,"</span>"]) | list])
+      #Operadores
       Regex.match?(@op, in_string) ->
-        new_string = Regex.replace(@op, in_string, "", global: false)
-        current = Regex.run(@op, in_string)
+        current = List.first(Regex.run(@op, in_string))
+        new_string = String.replace_leading(in_string, current, "")
         token(new_string, [Enum.join(["<span class='ops'>", current,"</span>"]) | list])
+      #Enteros
       Regex.match?(@integer, in_string) ->
-        new_string = Regex.replace(@integer, in_string, "", global: false)
-        current = Regex.run(@integer, in_string)
+        current = List.first(Regex.run(@integer, in_string))
+        new_string = String.replace_leading(in_string, current, "")
         token(new_string, [Enum.join(["<span class='int'>", current,"</span>"]) | list])
+      #Los otros tokens son cualquier otro caracter
       Regex.match?(@anyother, in_string) ->
-        new_string = Regex.replace(@anyother, in_string, "", global: false)
-        current = Regex.run(@anyother, in_string)
+        current = List.first(Regex.run(@anyother, in_string))
+        new_string = String.replace_leading(in_string, current, "")
         token(new_string, [current | list])
       true ->
         Enum.reverse(list)
     end
   end
-
 end
