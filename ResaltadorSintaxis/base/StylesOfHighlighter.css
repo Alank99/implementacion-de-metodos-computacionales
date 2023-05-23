@@ -3,7 +3,7 @@
     background-color: #202120;
 }
 
-.reserved{
+.res{
     font-weight: 500;
     color: #9406a3cc;
     text-shadow: 0 0 5px #de36fffc,
@@ -12,22 +12,13 @@
     0 0 100px #781df0;
 }
 
-.function{
+.fun{
     font-weight: 500;
     color: #3e46decc;
     text-shadow: 0 0 5px #04414efc,
     0 0 25px #1af747, 
     0 0 50px #480dbe,
     0 0 100px #05010a;
-}
-
-.reserved{
-    font-weight: 500;
-    color: #9406a3cc;
-    text-shadow: 0 0 5px #561563fc,
-    0 0 25px #f720e5, 
-    0 0 50px #4ef2ef,
-    0 0 100px #781df0;
 }
 
 .ids{
@@ -39,7 +30,7 @@
     0 0 100px #16e368;
 }
 
-.string{
+.str{
     font-weight: 500;
     color: #dd1c1ccc;
     text-shadow: 0 0 5px #1f180efc,
@@ -48,7 +39,7 @@
     0 0 100px #1b110c;
 }
 
-.op{
+.ops{
     font-weight: 500;
     color: #f5f5f5cc;
     text-shadow: 0 0 5px #d1c7c7fc,
@@ -57,7 +48,7 @@
     0 0 100px #a7b0ab;
 }
 
-.interger{
+.int{
     font-weight: 500;
     color: #d543bacc;
     text-shadow: 0 0 5px #a91cfbfc,

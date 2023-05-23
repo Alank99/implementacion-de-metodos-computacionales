@@ -72,16 +72,20 @@ defmodule Resaltador do
   @integer ~r/[+-]?\d+\.?\d?[eE]?[+-]?\d?/
   @whitespace ~r/^\s+/
   @anyother ~r/^./
+  @start ["<html>\n<head>\n\t<link rel='stylesheet' href='base/StylesOfHighlighter.css'>\n</head>\n<body>\n\t<pre>\n"]
+  @final "\n\t</pre>\n</body>\n</html>\n"
 
   @doc """
   Function that reads a file, line by line and returns all the
   """
-  def token_file(in_file) do
+  def token_file(in_file, out_file) do
     data = in_file
       # Read the file, line by line
       |> File.stream!()
       # Call a function with each line read
       |> Enum.map(&get_tokens(&1))
+      |> Enum.join("")
+    File.write(out_file, Enum.join([@start, data, @final]))
 
   end
 
@@ -96,50 +100,38 @@ defmodule Resaltador do
       Regex.match?(@whitespace, in_string) ->
         new_string = Regex.replace(@whitespace, in_string, "", global: false)
         current = Regex.run(@whitespace, in_string)
-        token(new_string, [[current | "whitespace"] | list])
+        token(new_string, [current | list])
       Regex.match?(@reserved, in_string) ->
         new_string = Regex.replace(@reserved, in_string, "", global: false)
         current = Regex.run(@reserved, in_string)
-        token(new_string, [[current | "reserved"] | list])
+        token(new_string, [Enum.join(["<span class='res'>", current,"</span>"]) | list])
       Regex.match?(@function, in_string) ->
         new_string = Regex.replace(@function, in_string, "", global: false)
         current = Regex.run(@function, in_string)
-        token(new_string, [[current | "function"] | list])
+        token(new_string, [Enum.join(["<span class='fun'>", current,"</span>"]) | list])
       Regex.match?(@string, in_string) ->
         new_string = Regex.replace(@string, in_string, "", global: false)
         current = Regex.run(@string, in_string)
-        token(new_string, [[current | "string"] | list])
+        token(new_string, [Enum.join(["<span class='str'>", current,"</span>"]) | list])
       Regex.match?(@ids, in_string) ->
         new_string = Regex.replace(@ids, in_string, "", global: false)
         current = Regex.run(@ids, in_string)
-        token(new_string, [[current | "identificator"] | list])
+        token(new_string, [Enum.join(["<span class='ids'>", current,"</span>"]) | list])
       Regex.match?(@op, in_string) ->
         new_string = Regex.replace(@op, in_string, "", global: false)
         current = Regex.run(@op, in_string)
-        token(new_string, [[current | "operator"] | list])
+        token(new_string, [Enum.join(["<span class='ops'>", current,"</span>"]) | list])
       Regex.match?(@integer, in_string) ->
         new_string = Regex.replace(@integer, in_string, "", global: false)
         current = Regex.run(@integer, in_string)
-        token(new_string, [[current | "integer"] | list])
+        token(new_string, [Enum.join(["<span class='int'>", current,"</span>"]) | list])
       Regex.match?(@anyother, in_string) ->
         new_string = Regex.replace(@anyother, in_string, "", global: false)
         current = Regex.run(@anyother, in_string)
-        token(new_string, [[current | "anyohter"] | list])
+        token(new_string, [current | list])
       true ->
         Enum.reverse(list)
-        @doc """
-        aqui ppodriamos que al final de los strings 
-        ademas de invertir la lista pongamos esto
-        ultimotag = ["</pre>","</body>","</html>"]
-        [Enum.reverse(list) | ultimotag]
-        """
     end
   end
- @doc """
-  posible implementacion crea una fncion anonima para que genere el span de html de esta manera
-  defp span_token(token,token_type) do
-   "<span class="token_type">token</span>"
-  end
-  """
 
 end
