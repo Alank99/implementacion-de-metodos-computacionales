@@ -5,7 +5,7 @@
 
 .res{
     font-weight: 500;
-    color: skyblue;
+    color: rgb(18, 177, 239);
  
 }
 
@@ -16,37 +16,37 @@
 
 .fun{
     font-weight: 500;
-    color: yellow;
+    color: rgb(242, 0, 255);
 
 }
 
 .ids{
     font-weight: 500;
-    color: white;
+    color: rgb(35, 237, 170);
 
 }
 
 .str{
     font-weight: 500;
-    color: lightsalmon;
+    color: rgb(63, 5, 238);
 
 }
 
 .ops{
     font-weight: 500;
-    color: #f81d5bcc;
+    color: #f9f341f1;
 
 }
 
 .int{
     font-weight: 500;
-    color: #4b51f0cc;
+    color: #d50909cc;
 
 }
 
 .lib{
     font-weight: 500;
-    color: #c9c409cc;
+    color: #11bb25cc;
 }
 
 body{

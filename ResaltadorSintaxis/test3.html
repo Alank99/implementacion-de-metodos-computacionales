@@ -1,0 +1,69 @@
+<html>
+<head>
+	<link rel='stylesheet' href='base/StylesOfHighlighter.css'>
+</head>
+<body>
+	<pre>
+<span class='res'>#include</span> <span class='lib'>&ltstdio.h&gt</span>
+
+#<span class='ids'>define</span> <span class='ids'>MAX_SIZE</span> <span class='int'>100</span>
+
+<span class='res'>typedef</span> <span class='res'>struct</span> {
+    <span class='res'>int</span> <span class='ids'>x</span>;
+    <span class='res'>int</span> <span class='ids'>y</span>;
+} <span class='ids'>Point</span>;
+
+<span class='res'>enum</span> <span class='ids'>Color</span> {
+    <span class='ids'>RED</span>,
+    <span class='ids'>GREEN</span>,
+    <span class='ids'>BLUE</span>
+};
+
+<span class='res'>int</span> <span class='fun'>add</span>(<span class='res'>int</span> <span class='ids'>a</span>, <span class='res'>int</span> <span class='ids'>b</span>) {
+    <span class='res'>return</span> <span class='ids'>a</span> <span class='ops'>+</span> <span class='ids'>b</span>;
+}
+
+<span class='res'>int</span> <span class='fun'>main</span>() {
+    <span class='res'>int</span> <span class='ids'>num1</span> <span class='ops'>=</span> <span class='int'>5</span>;
+    <span class='res'>int</span> <span class='ids'>num2</span> <span class='ops'>=</span> <span class='int'>10</span>;
+    <span class='res'>int</span> <span class='ids'>result</span> <span class='ops'>=</span> <span class='fun'>add</span>(<span class='ids'>num1</span>, <span class='ids'>num2</span>);
+
+    <span class='res'>if</span> (<span class='ids'>result</span> <span class='ops'>></span> <span class='int'>15</span>) {
+        <span class='fun'>printf</span>(<span class='str'>"El resultado es mayor a 15\n"</span>);
+    } <span class='res'>else</span> {
+        <span class='fun'>printf</span>(<span class='str'>"El resultado es menor o igual a 15\n"</span>);
+    }
+
+    <span class='res'>for</span> (<span class='res'>int</span> <span class='ids'>i</span> <span class='ops'>=</span> <span class='int'>0</span>; <span class='ids'>i</span> <span class='ops'><</span> <span class='int'>5</span>; <span class='ids'>i</span><span class='ops'>++</span>) {
+        <span class='fun'>printf</span>(<span class='str'>"Iteración %d\n"</span>, <span class='ids'>i</span>);
+    }
+
+    <span class='res'>while</span> (<span class='ids'>num1</span> <span class='ops'>></span> <span class='int'>0</span>) {
+        <span class='fun'>printf</span>(<span class='str'>"%d\n"</span>, <span class='ids'>num1</span>);
+        <span class='ids'>num1</span><span class='ops'>--</span>;
+    }
+
+    <span class='ids'>Point</span> <span class='ids'>p</span>;
+    <span class='ids'>p</span>.<span class='ids'>x</span> <span class='ops'>=</span> <span class='int'>2</span>;
+    <span class='ids'>p</span>.<span class='ids'>y</span> <span class='ops'>=</span> <span class='int'>3</span>;
+
+    <span class='res'>switch</span> (<span class='ids'>p</span>.<span class='ids'>x</span>) {
+        <span class='res'>case</span> <span class='int'>1</span><span class='ops'>:</span>
+            <span class='fun'>printf</span>(<span class='str'>"El valor de x es 1\n"</span>);
+            <span class='res'>break</span>;
+        <span class='res'>case</span> <span class='int'>2</span><span class='ops'>:</span>
+            <span class='fun'>printf</span>(<span class='str'>"El valor de x es 2\n"</span>);
+            <span class='res'>break</span>;
+        <span class='res'>default</span><span class='ops'>:</span>
+            <span class='fun'>printf</span>(<span class='str'>"El valor de x no es ni 1 ni 2\n"</span>);
+    }
+
+    <span class='res'>char</span> <span class='ids'>str</span>[<span class='ids'>MAX_SIZE</span>] <span class='ops'>=</span> <span class='str'>"Hola, mundo!"</span>;
+    <span class='fun'>printf</span>(<span class='str'>"%s\n"</span>, <span class='ids'>str</span>);
+
+    <span class='res'>return</span> <span class='int'>0</span>;
+}
+
+	</pre>
+</body>
+</html>

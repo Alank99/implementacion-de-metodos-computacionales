@@ -5,7 +5,7 @@
 # 5/23/2023
 
 
-defmodule Resaltador do
+defmodule Highlighting do
 
   @reserved ~r/^auto|^double|^int|^struct|^break|^else|^long|^switch|^case|^enum|^register|^typedef|^char|^extern|^return|^union|^const|^float|^short|^unsigned|^continue|^for|^signed|^void|^default|^goto|^sizeof|^volatile|^do|^if|^static|^while|^\#include|^NULL/
   @function ~r/(^[a-zA-Z_][a-zA-Z0-9_]*)\(/
@@ -23,15 +23,17 @@ defmodule Resaltador do
   @doc """
   Function that reads a file, line by line and returns all the
   """
+  
   def token_file(in_file, out_file) do
-    data = in_file
-      # Read the file, line by line
-      |> File.stream!()
-      # Call a function with each line read
-      |> Enum.map(&get_tokens(&1))
-      |> Enum.join("")
-    File.write(out_file, Enum.join([@start, data, @final]))
+    {time, _result} = :timer.tc(fn ->
+      data = in_file
+        |> File.stream!()
+        |> Enum.map(&get_tokens(&1))
+        |> Enum.join("")
+      File.write(out_file, Enum.join([@start, data, @final]))
+    end)
 
+    IO.puts "Tiempo de ejecucin: #{time} microsegundos"
   end
 
   @doc """
