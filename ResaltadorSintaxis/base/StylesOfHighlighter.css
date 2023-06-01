@@ -5,48 +5,48 @@
 
 .res{
     font-weight: 500;
-    color: rgb(18, 177, 239);
+    color: rgb(18, 239, 47);
  
 }
 
 .com{
     font-weight: 500;
-    color: lightgreen;
+    color: rgb(18, 116, 18);
 }
 
 .fun{
     font-weight: 500;
-    color: rgb(242, 0, 255);
+    color: rgb(188, 14, 159);
 
 }
 
 .ids{
     font-weight: 500;
-    color: rgb(35, 237, 170);
+    color: rgb(123, 160, 171);
 
 }
 
 .str{
     font-weight: 500;
-    color: rgb(63, 5, 238);
+    color: rgb(188, 167, 8);
 
 }
 
 .ops{
     font-weight: 500;
-    color: #f9f341f1;
+    color: #bd4f14f1;
 
 }
 
 .int{
     font-weight: 500;
-    color: #d50909cc;
+    color: #9e33f0cc;
 
 }
 
 .lib{
     font-weight: 500;
-    color: #11bb25cc;
+    color: #0fbb23cc;
 }
 
 body{

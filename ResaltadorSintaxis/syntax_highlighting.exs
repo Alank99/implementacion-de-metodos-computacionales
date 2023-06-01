@@ -7,7 +7,7 @@
 
 defmodule Highlighting do
 
-  @reserved ~r/^auto|^double|^int|^struct|^break|^else|^long|^switch|^case|^enum|^register|^typedef|^char|^extern|^return|^union|^const|^float|^short|^unsigned|^continue|^for|^signed|^void|^default|^goto|^sizeof|^volatile|^do|^if|^static|^while|^\#include|^NULL/
+  @reserved ~r/^auto|^double|^int|^struct|^break|^else|^long|^switch|^case|^enum|^register|^typedef|^char|^extern|^return|^union|^const|^float|^short|^unsigned|^continue|^for|^signed|^void|^default|^goto|^sizeof|^volatile|^do|^if|^printf|^static|^while|^\#include|^NULL/
   @function ~r/(^[a-zA-Z_][a-zA-Z0-9_]*)\(/
   @ids ~r/^[a-zA-Z_][a-zA-Z0-9_]*(\[\])?/
   @string ~r/^\".*\"|^\'.*\'/
@@ -43,60 +43,60 @@ defmodule Highlighting do
 
   defp token(in_string, list) do
     cond do
-      #Comentarios
+      #comment
       Regex.match?(@comment, in_string) ->
         current = List.first(Regex.run(@comment, in_string))
         IO.inspect(in_string, label: "Comment")
         token("\n", [Enum.join(["<span class='com'>", current,"</span>"]) | list])
-      #Espacios
+      #whitespace
       Regex.match?(@whitespace, in_string) ->
         current = List.first(Regex.run(@whitespace, in_string))
         new_string = String.replace_leading(in_string, current, "")
         IO.inspect(in_string, label: "WhiteSpace")
         token(new_string, [current | list])
-      #Reservadas
+      #reserved
       Regex.match?(@reserved, in_string) ->
         current = List.first(Regex.run(@reserved, in_string))
         new_string = String.replace_leading(in_string, current, "")
         IO.inspect(in_string, label: "Reserved")
         token(new_string, [Enum.join(["<span class='res'>", current,"</span>"]) | list])
-      #Funciones
+      #function
       Regex.match?(@function, in_string) ->
         current = List.last(Regex.run(@function, in_string))
         new_string = String.replace_leading(in_string, current, "")
         IO.inspect(in_string, label: "Function")
         token(new_string, [Enum.join(["<span class='fun'>", current,"</span>"]) | list])
-      #Librerias
+      #library
       Regex.match?(@lib, in_string) ->
           current = Regex.run(@lib, in_string)
           new_string = String.replace_leading(in_string, List.first(current), "")
           IO.inspect(in_string, label: "Library")
           token(new_string, [Enum.join(["<span class='lib'>&lt", List.last(current),"&gt</span>"]) | list])
-      #Strings
+      #string
       Regex.match?(@string, in_string) ->
         current = List.first(Regex.run(@string, in_string))
         new_string = String.replace_leading(in_string, current, "")
         IO.inspect(in_string, label: "String")
         token(new_string, [Enum.join(["<span class='str'>", current,"</span>"]) | list])
-      #Identificadores
+      #indentifier
       Regex.match?(@ids, in_string) ->
         current = List.first(Regex.run(@ids, in_string))
         new_string = String.replace_leading(in_string, current, "")
         IO.inspect(in_string, label: "Ids")
         token(new_string, [Enum.join(["<span class='ids'>", current,"</span>"]) | list])
-      #Operadores
+      #operators
       Regex.match?(@op, in_string) ->
         current = List.first(Regex.run(@op, in_string))
         new_string = String.replace_leading(in_string, current, "")
         IO.inspect(in_string, label: "Operators")
         token(new_string, [Enum.join(["<span class='ops'>", current,"</span>"]) | list])
-      #Enteros
+      #integer
       Regex.match?(@integer, in_string) ->
         current = List.first(Regex.run(@integer, in_string))
         new_string = String.replace_leading(in_string, current, "")
         IO.inspect(in_string, label: "Int")
         token(new_string, [Enum.join(["<span class='int'>", current,"</span>"]) | list])
-      #Los otros tokens son cualquier otro caracter
+      #anyother
       Regex.match?(@anyother, in_string) ->
         current = List.first(Regex.run(@anyother, in_string))
         new_string = String.replace_leading(in_string, current, "")

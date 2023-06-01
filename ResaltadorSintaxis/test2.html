@@ -15,10 +15,10 @@
 	<span class='ids'>new</span> <span class='ops'>=</span> (<span class='ids'>t_dlist</span> <span class='ops'>*</span>)<span class='fun'>malloc</span>(<span class='res'>sizeof</span>(<span class='ids'>t_dlist</span>);
 	<span class='res'>if</span> (<span class='ids'>new</span> <span class='ops'>==</span> <span class='res'>NULL</span>)
 	{
-		<span class='fun'>printf</span>(<span class='str'>"%sError while allocating memory for node%s\n"</span>, <span class='ids'>RED</span>, <span class='ids'>END</span>);
+		<span class='res'>printf</span>(<span class='str'>"%sError while allocating memory for node%s\n"</span>, <span class='ids'>RED</span>, <span class='ids'>END</span>);
 		<span class='res'>return</span>;
 	}
-	<span class='fun'>printf</span>(<span class='str'>"%sThe value%s %s%d%s %shas been added to the top of the circular list.%s\n\n"</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>value</span>, <span class='ids'>END</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>);
+	<span class='res'>printf</span>(<span class='str'>"%sThe value%s %s%d%s %shas been added to the top of the circular list.%s\n\n"</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>value</span>, <span class='ids'>END</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>);
 	<span class='ids'>new</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span> <span class='ops'>=</span> <span class='ids'>value</span>;
 
 	<span class='res'>if</span> (<span class='fun'>emptyCircular</span>(<span class='ids'>lst</span>) <span class='ops'>==</span> <span class='int'>1</span>)

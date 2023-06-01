@@ -13,6 +13,10 @@ Function in this one is composed with the first character is composed of char, a
 
 Ids are our variables that is composed as a function, but this can or not have parentheses to declare it as a list.
 
+The library is identified by the greater-than and less-than signs, where what is inside can be any element.
+
+The operations are the following characters: Arithmetic operators, relational operators, shift operators, logical operators, bitwise operators, conditional operators, assignment operators, and miscellaneous operators.
+
 The string is composed of any element, but must always start and end with single or double quotes.
 
 While the integers are composed by numbers with sign, exponential, decimal, etc.. 
