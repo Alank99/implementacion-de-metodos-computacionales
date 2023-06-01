@@ -4,8 +4,25 @@
 ### Alan Anthony Hernandez Perez | A01783347
 ### Mario Ignacio Frias Piña  |  A01782559
 
+## Context
+In this syntax highlighter analyzes the C language, which was identified with 8 distinguishable tokens:
+
+First of it is inverted, in this are all the words that are reserved, example of it would be auto, double, int, struct, etc..
+
+Function in this one is composed with the first character is composed of char, after that there can be elements of char and numerical, but at the end it must be with a parenthesis.
+
+Ids are our variables that is composed as a function, but this can or not have parentheses to declare it as a list.
+
+The string is composed of any element, but must always start and end with single or double quotes.
+
+While the integers are composed by numbers with sign, exponential, decimal, etc.. 
+
+Finally, there are the comments that must start with, after that you can do whatever you want.
+
+While the other tokens found in the code are elements that can be semicolons, spaces or parentheses in the function, it was considered to leave it without a specific color but taking into account its token.
+
 ## Documentation
-The code works through three main functions, the first function of "token_file", processes the incoming file in the form of a string, with the help of the piping function of racket, each function will send the result of each line to the next line of code. Then the file is sent to a function to be able to separate the string into lines separated by new lines, what is obtained from the lines of string will apply a map to each line with the function of "get_token" which in turn calls its anonymous function.
+The code works through three main functions, the first function of "token_file", processes the incoming file as a string, with the help of the piping elixir  function, each function will send the result of each line to the next line of code. Then the file is sent to a function in order to separate the string into lines separated by new lines, whatever is obtained from the string lines will be applied a map to each line with the "get_token" function which in turn calls its anonymous function.
 
 This function will start with the dynamic programming algorithm by the fact that it uses recursion with a tail, during the execution of the private function each call will analiyze each element of the line of string, with a conditional in which the argument of each condition will evaluate regular expressions that are expressed in the code.
 
@@ -30,6 +47,6 @@ iex syntax_highlighting.exs
 ``` 
 To run the function is as follows
 ``` 
-iex> Highlighting.tokenfile('in_file','out_file') 
+iex> Highlighting.tokenfile('<name in_file>.c','<name out_file>.html') 
 ``` 
 
