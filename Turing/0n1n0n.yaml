@@ -1,0 +1,35 @@
+name: 0n1n0n
+source code: |-
+  # Checks if you have n 0's around n 1's
+  # 02/06/2023
+  # Mario , Alan
+
+  input: '000111000'
+  blank: ' '
+  start state: first0
+  table:
+    first0:
+      0: {write: A, R: first1}
+      B: {R: scan}
+    first1:
+      [0,B]: R
+      1: {write: B, R: second0}
+    second0:
+      [1,C]: R
+      0: {write: C, L: back}
+    back:
+      [0,B,1,C]: L
+      A: {R: first0}
+    scan:
+      [B,C]: R
+      ' ': {R: ok}
+    ok:
+    
+    
+positions:
+  first0: {x: 406.05, y: 244.29, fixed: false}
+  first1: {x: 262.55, y: 249.06, fixed: false}
+  second0: {x: 326.26, y: 377.88, fixed: false}
+  back: {x: 469.75, y: 372.58, fixed: false}
+  scan: {x: 539.01, y: 190.89, fixed: false}
+  ok: {x: 431.5, y: 95.94, fixed: false}

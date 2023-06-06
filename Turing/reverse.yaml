@@ -1,0 +1,41 @@
+name: reverse
+source code: |
+  # Cheecks if a value is given and then reversed with a vocabulary [0, 1]
+  # 06/06/2023
+  # Mario , Alan
+
+  input: '0100'
+  blank: ' '
+  start state: start
+  table:
+    start:
+      0: {write: ' ', R: first0}
+      1: {write: ' ', R: first1}
+      ' ': {R: ok}
+    first0:
+      ' ': {L: find0}
+      [0, 1]: R
+    find0:
+      0: {write: ' ', L: back}
+      [1, ' ']: {R: no}
+    first1:
+      ' ': {L: find1}
+      [0, 1]: R
+    find1:
+      1: {write: ' ', L: back}
+      [0, ' ']: {R: no}
+    back:
+      [0, 1]: L
+      ' ': {R: start}
+    no:
+    ok:
+      
+positions:
+  start: {x: 365.29, y: 250.27, fixed: false}
+  first0: {x: 407.24, y: 116.8, fixed: false}
+  find0: {x: 262.35, y: 191.54, fixed: false}
+  first1: {x: 441.76, y: 378.47, fixed: false}
+  find1: {x: 426.94, y: 230.61, fixed: false}
+  back: {x: 351.31, y: 97.13, fixed: false}
+  no: {x: 308.24, y: 328.61, fixed: false}
+  ok: {x: 515.52, y: 274.97, fixed: false}

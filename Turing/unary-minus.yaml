@@ -1,0 +1,35 @@
+name: unary-minus
+source code: |-
+  # Does substraction of 2 unary numbers separated by -
+  # 06/06/2023
+  # Mario , Alan
+
+  input: '1111-11'
+  blank: ' '
+  start state: forw
+  table:
+    forw:
+      1: R
+      '-': {R: minus}
+    minus:
+      ' ': {L: back1}
+      1: R
+    back1:
+      1: {write: ' ', L: back}
+      ' ': L
+      '-' : {write: ' ', R: ok}
+    back:
+      [1, '-']: L
+      ' ': {R: forw1}
+    forw1:
+      1: {write: ' ', R: forw}
+      ' ': R
+    ok:
+    
+positions:
+  forw: {x: 272.2, y: 329.71, fixed: false}
+  minus: {x: 341.22, y: 205.84, fixed: false}
+  back1: {x: 485.07, y: 187.41, fixed: false}
+  back: {x: 528.4, y: 322.5, fixed: false}
+  forw1: {x: 402.16, y: 390, fixed: false}
+  ok: {x: 396.69, y: 76.66, fixed: false}
