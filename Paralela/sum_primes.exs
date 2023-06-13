@@ -5,14 +5,16 @@
 
 defmodule Hw.Primes do
 
-  defp is_prime(1), do: false
   defp is_prime(2), do: true
-  defp is_prime(num) when rem(num, 2) == 0, do: false
   defp is_prime(num) when num < 2, do: false
+  defp is_prime(num) when rem(num, 2) == 0, do: false
   defp is_prime(num) do
-    for i <- 3..round(:math.sqrt(num)), do: if rem(num, i) == 0, do: false
-    true
+    do_prime(num, round(:math.sqrt(num)))
   end
+
+  defp do_prime(num, max) when num > max, do: true
+  defp do_prime(num, max) when rem(max, num) == 0, do: false
+  defp do_prime(num, max), do: do_prime(num + 1, max)
 
   defp sum_range({start, finish}) do
     Enum.reduce(start..finish, 0, fn num, acc -> if is_prime(num), do: acc + num, else: acc end)
@@ -30,14 +32,14 @@ defmodule Hw.Primes do
   def sum_primes_parallel(finish, cores) do
     make_ranges(2, finish, cores)
     |> Enum.map(&Task.async(fn -> sum_range(&1) end))
-    |> Enum.map(&Task.await(&1))
+    |> Enum.map(&Task.await(&1, :infinity))
     |> Enum.sum()
   end
 
   def sum_primes_parallel(start, finish, cores) do
     make_ranges(start, finish, cores)
     |> Enum.map(&Task.async(fn -> sum_range(&1) end))
-    |> Enum.map(&Task.await(&1))
+    |> Enum.map(&Task.await(&1, :infinity))
     |> Enum.sum()
   end
 
