@@ -21,19 +21,20 @@ defmodule Highlighting do
   @final "\n\t</pre>\n</body>\n</html>\n"
 
   @doc """
-  Function that reads a file, line by line and returns all the
+  Function that reads a file, line by line and returns all 
   """
-  
-  def token_file(in_file, out_file) do
-    {time, _result} = :timer.tc(fn ->
+
+  def concur_token_file(list) do
+    Enum.map(list,&Task.async(fn -> token_file(&1) end))
+    Enum.map(list,&Task.await(&1, :infinity))
+  end
+
+  def token_file({in_file, out_file}) do
       data = in_file
         |> File.stream!()
         |> Enum.map(&get_tokens(&1))
         |> Enum.join("")
       File.write(out_file, Enum.join([@start, data, @final]))
-    end)
-
-    IO.puts "Tiempo de ejecucin: #{time} microsegundos"
   end
 
   @doc """
