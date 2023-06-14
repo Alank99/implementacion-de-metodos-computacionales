@@ -4,7 +4,6 @@
 # 09/06/2023
 
 defmodule Hw.Primes do
-
   defp is_prime(2), do: true
   defp is_prime(num) when num < 2, do: false
   defp is_prime(num) when rem(num, 2) == 0, do: false
@@ -17,32 +16,46 @@ defmodule Hw.Primes do
   defp do_prime(num, max), do: do_prime(num + 1, max)
 
   defp sum_range({start, finish}) do
-    Enum.reduce(start..finish, 0, fn num, acc -> if is_prime(num), do: acc + num, else: acc end)
+    Enum.reduce(start..finish, 0, fn num, acc ->
+      if is_prime(num), do: acc + num, else: acc
+    end)
   end
 
-  defp add_tuple(size, final, start, finish, []), do: add_tuple(size, final, finish + 1, finish + size, [{round(start), round(finish)}])
-  defp add_tuple(_size, final, start, finish, list) when finish > final,  do: [{round(start), round(finish)} | list]
-  defp add_tuple(size, final, start, finish, list), do: add_tuple(size, final, finish + 1, finish + size, [{round(start), round(finish)} | list])
-
   defp make_ranges(start, finish, cores) do
-    size = (finish - start) / cores
-    add_tuple(size, finish, start, start + size, [])
+    size = div(finish - start + 1, cores)
+    add_tuple(start, start + size - 1, size, finish, [])
+  end
+
+  defp add_tuple(start, finish, _size, _final, acc) when start > finish, do: acc
+  defp add_tuple(start, finish, size, final, acc) do
+    new_start = start + size
+    new_finish = if new_start + size - 1 > final, do: final, else: new_start + size - 1
+    add_tuple(new_start, new_finish, size, final, [{start, finish} | acc])
   end
 
   def sum_primes_parallel(finish, cores) do
-    make_ranges(2, finish, cores)
-    |> Enum.map(&Task.async(fn -> sum_range(&1) end))
-    |> Enum.map(&Task.await(&1, :infinity))
+    ranges = make_ranges(2, finish, cores)
+    ranges
+    |> Enum.map(fn {start, finish} ->
+      Task.async(fn -> sum_range({start, finish}) end)
+    end)
+    |> Enum.map(fn task ->
+      Task.await(task, :infinity)
+    end)
     |> Enum.sum()
   end
 
   def sum_primes_parallel(start, finish, cores) do
-    make_ranges(start, finish, cores)
-    |> Enum.map(&Task.async(fn -> sum_range(&1) end))
-    |> Enum.map(&Task.await(&1, :infinity))
+    ranges = make_ranges(start, finish, cores)
+    ranges
+    |> Enum.map(fn {start, finish} ->
+      Task.async(fn -> sum_range({start, finish}) end)
+    end)
+    |> Enum.map(fn task ->
+      Task.await(task, :infinity)
+    end)
     |> Enum.sum()
   end
 
   def sum_primes(finish), do: sum_range({2, finish})
-
 end
