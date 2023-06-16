@@ -1,0 +1,634 @@
+<html>
+<head>
+	<link rel='stylesheet' href='../base/StylesOfHighlighter.css'>
+</head>
+<body>
+	<pre>
+<span class='res'>#include</span> <span class='str'>"structures.h"</span>
+
+<span class='com'>//Fuction 1 add node</span>
+<span class='com'>//Adds the value to the start of the list.</span>
+<span class='res'>void</span>	<span class='fun'>addfirstCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>, <span class='res'>int</span> <span class='ids'>value</span>)
+{
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>new</span>;
+
+	<span class='ids'>new</span> <span class='ops'>=</span> (<span class='ids'>t_dlist</span> <span class='ops'>*</span>)<span class='fun'>malloc</span>(<span class='res'>sizeof</span>(<span class='ids'>t_dlist</span>);
+	<span class='res'>if</span> (<span class='ids'>new</span> <span class='ops'>==</span> <span class='res'>NULL</span>)
+	{
+		<span class='res'>printf</span>(<span class='str'>"%sError while allocating memory for node%s\n"</span>, <span class='ids'>RED</span>, <span class='ids'>END</span>);
+		<span class='res'>return</span>;
+	}
+	<span class='res'>printf</span>(<span class='str'>"%sThe value%s %s%d%s %shas been added to the top of the circular list.%s\n\n"</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>value</span>, <span class='ids'>END</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>);
+	<span class='ids'>new</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span> <span class='ops'>=</span> <span class='ids'>value</span>;
+
+	<span class='res'>if</span> (<span class='fun'>emptyCircular</span>(<span class='ids'>lst</span>) <span class='ops'>==</span> <span class='int'>1</span>)
+		<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span> <span class='ops'>=</span> <span class='ids'>new</span>;
+	<span class='res'>else</span>
+		<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>new</span>;
+
+	<span class='ids'>new</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span> <span class='ops'>=</span> <span class='ids'>new</span>;
+	<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span>;
+	
+}
+<span class='com'>//Adds value in middle of the list</span>
+<span class='res'>void</span>	<span class='fun'>addMiddleCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>, <span class='res'>int</span> <span class='ids'>value</span>)
+{
+	<span class='res'>short</span> <span class='res'>int</span> <span class='ids'>counter</span> <span class='ops'>=</span> <span class='fun'>sizeCircular</span>(<span class='ids'>lst</span>);
+	<span class='res'>if</span>(<span class='ids'>counter</span> <span class='ops'>==</span> <span class='int'>0</span>)
+	{
+		<span class='fun'>addfirstCircular</span>(<span class='ids'>lst</span>, <span class='ids'>value</span>);
+		<span class='res'>return</span>;
+			
+	}
+	<span class='res'>else</span> <span class='res'>if</span>( <span class='ids'>counter</span> <span class='ops'>==</span> <span class='int'>1</span>)
+	{
+		<span class='fun'>addlastCircular</span>(<span class='ids'>lst</span>,<span class='ids'>value</span>);
+		<span class='res'>return</span>;
+	}
+	
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>new</span>;
+	<span class='ids'>t_dlist</span> <span class='ops'>*</span><span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='ids'>t_dlist</span> <span class='ops'>*</span><span class='ids'>inext</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+	
+	<span class='res'>short</span> <span class='res'>int</span> <span class='ids'>i</span> <span class='ops'>=</span> <span class='int'>1</span>;
+
+	<span class='ids'>new</span> <span class='ops'>=</span> (<span class='ids'>t_dlist</span> <span class='ops'>*</span>)<span class='fun'>malloc</span>(<span class='res'>sizeof</span>(<span class='ids'>t_dlist</span>); 
+
+	<span class='res'>if</span> (<span class='ids'>new</span> <span class='ops'>==</span> <span class='res'>NULL</span>)
+	{
+		<span class='res'>printf</span>(<span class='str'>"%sError while allocating memory for node%s\n"</span>, <span class='ids'>RED</span>, <span class='ids'>END</span>);
+		<span class='res'>return</span>;
+	}
+	<span class='res'>printf</span>(<span class='str'>"%sThe value%s %s%d%s %shas been added in the middle of the circular list.%s\n\n"</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>value</span>, <span class='ids'>END</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>);
+	<span class='ids'>new</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span> <span class='ops'>=</span> <span class='ids'>value</span>;
+
+		<span class='res'>while</span>(<span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>!=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span> <span class='ops'>&&</span> <span class='ids'>i</span> <span class='ops'><</span> (<span class='ids'>counter</span><span class='ops'>/</span><span class='int'>2</span>)
+		{
+			<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+			<span class='ids'>inext</span> <span class='ops'>=</span> <span class='ids'>inext</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+			<span class='ids'>i</span><span class='ops'>++</span>;
+		}
+		<span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>new</span>;
+		<span class='ids'>new</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>index</span>;
+		<span class='ids'>inext</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>new</span>;
+		<span class='ids'>new</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>inext</span>;  
+}
+
+<span class='com'>//Adds the value to the end of the list.</span>
+<span class='res'>void</span>	<span class='fun'>addlastCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>, <span class='res'>int</span> <span class='ids'>value</span>)
+{
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>new</span>;
+
+	<span class='ids'>new</span> <span class='ops'>=</span> (<span class='ids'>t_dlist</span> <span class='ops'>*</span>)<span class='fun'>malloc</span>(<span class='res'>sizeof</span>(<span class='ids'>t_dlist</span>);
+	<span class='res'>if</span> (<span class='ids'>new</span> <span class='ops'>==</span> <span class='res'>NULL</span>)
+	{
+		<span class='res'>printf</span>(<span class='str'>"%sError while allocating memory for node%s\n"</span>, <span class='ids'>RED</span>, <span class='ids'>END</span>);
+		<span class='res'>return</span>;
+	}
+
+	<span class='res'>printf</span>(<span class='str'>"%sThe value%s %s%d%s %shas been added to the end of the circular list.%s\n\n"</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>value</span>, <span class='ids'>END</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>);
+	<span class='ids'>new</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span> <span class='ops'>=</span> <span class='ids'>value</span>;
+	
+	<span class='res'>if</span> (<span class='fun'>emptyCircular</span>(<span class='ids'>lst</span>) <span class='ops'>==</span> <span class='int'>1</span>)
+		<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span> <span class='ops'>=</span> <span class='ids'>new</span>;
+	<span class='res'>else</span>
+		<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>new</span>;
+
+	<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span> <span class='ops'>=</span> <span class='ids'>new</span>;
+	<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span>;
+}
+
+<span class='com'>//Function 2 add multiple consecutive nodes</span>
+<span class='res'>void</span>    <span class='fun'>addMultipleCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>){
+    <span class='res'>short</span> <span class='res'>int</span> <span class='ids'>counter</span>, <span class='ids'>value</span>, <span class='ids'>i</span>,<span class='ids'>select</span>;
+    <span class='res'>printf</span>(<span class='str'>"\n%sHow many nodes you want to add? %s"</span>, <span class='ids'>BLU</span>, <span class='ids'>END</span>);
+    <span class='fun'>scanf</span>(<span class='str'>"%hd"</span>,<span class='ops'>&</span><span class='ids'>counter</span>);
+	<span class='res'>printf</span>(<span class='str'>"\n%sWhere do you want to put the nodes:%s \n%s1) Start%s \n%s2) Middle%s \n%s3) End%s\n"</span>, <span class='ids'>BLU</span>, <span class='ids'>END</span>, <span class='ids'>MAG</span>, <span class='ids'>END</span>, <span class='ids'>YEL</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>END</span>);
+	<span class='fun'>scanf</span>(<span class='str'>"%hd"</span>,<span class='ops'>&</span><span class='ids'>select</span>);
+    <span class='res'>for</span> (<span class='ids'>i</span> <span class='ops'>=</span> <span class='int'>0</span>; <span class='ids'>i</span> <span class='ops'><</span> <span class='ids'>counter</span>; <span class='ops'>++</span><span class='ids'>i</span>)
+    {
+        <span class='res'>printf</span>(<span class='str'>"%sWhat is the value of the node %hd: %s"</span>, <span class='ids'>BAK</span>, <span class='ids'>i</span><span class='ops'>+</span><span class='int'>1</span>, <span class='ids'>END</span>);
+        <span class='fun'>scanf</span>(<span class='str'>"%hd"</span>,<span class='ops'>&</span><span class='ids'>value</span>);
+        <span class='res'>if</span>(<span class='ids'>select</span> <span class='ops'>==</span> <span class='int'>1</span>)
+			<span class='fun'>addfirstCircular</span>(<span class='ids'>lst</span>,<span class='ids'>value</span>);
+		<span class='res'>else</span> <span class='res'>if</span>(<span class='ids'>select</span> <span class='ops'>==</span> <span class='int'>2</span>)
+			<span class='fun'>addMiddleCircular</span>(<span class='ids'>lst</span>,<span class='ids'>value</span>);
+		<span class='res'>else</span> <span class='res'>if</span>(<span class='ids'>select</span> <span class='ops'>==</span> <span class='int'>3</span>)
+			<span class='fun'>addlastCircular</span>(<span class='ids'>lst</span>,<span class='ids'>value</span>);
+		<span class='res'>else</span>
+		{
+			<span class='res'>printf</span>(<span class='str'>"%sThe number you have chosen is not in the options\n\n%s"</span>, <span class='ids'>RED</span>, <span class='ids'>END</span>);
+			<span class='res'>break</span>;
+		}
+	}   
+}
+
+<span class='com'>//Function 3 delete a node</span>
+<span class='com'>//Deletes the first time a specific value is found in the list.</span>
+<span class='res'>void</span>	<span class='fun'>delCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>, <span class='res'>int</span> <span class='ids'>value</span>)
+{
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>index</span>;
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>past</span>;
+	<span class='res'>short</span> <span class='res'>int</span> <span class='ids'>pos</span> <span class='ops'>=</span> <span class='int'>0</span>;
+
+	<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='ids'>past</span> <span class='ops'>=</span> <span class='res'>NULL</span>;
+	<span class='res'>do</span>
+	{
+		<span class='res'>if</span> (<span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span> <span class='ops'>==</span> <span class='ids'>value</span>)
+		{
+			<span class='res'>if</span> (<span class='ids'>past</span>)
+			{
+				<span class='ids'>past</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+				<span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>past</span>;
+				<span class='res'>if</span> (<span class='ids'>index</span> <span class='ops'>==</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span>)
+					<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span> <span class='ops'>=</span> <span class='ids'>past</span>;
+			}
+			<span class='res'>else</span>
+			{
+				<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+				<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span>;
+				<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+			}
+			<span class='res'>printf</span>(<span class='str'>"%sThe node[%s%s%hd%s%s] was deleted, with value%s %s%d%s\n\n"</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>pos</span><span class='ops'>+</span><span class='int'>1</span>, <span class='ids'>END</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span>, <span class='ids'>END</span>);
+			<span class='fun'>free</span>(<span class='ids'>index</span>);
+			<span class='res'>return</span>;
+		}
+		<span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>index</span>;
+		<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+		<span class='ids'>pos</span><span class='ops'>++</span>;
+	} <span class='res'>while</span>(<span class='ids'>index</span> <span class='ops'>!=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>);
+}
+
+<span class='com'>//Function 4 a delete multiple nodes</span>
+<span class='com'>//Deletes all the times a specific value is found in the list.</span>
+<span class='res'>void</span>	<span class='fun'>delallCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>, <span class='res'>int</span> <span class='ids'>value</span>)
+{
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>index</span>;
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>past</span>;
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>cpy</span>;
+	<span class='res'>short</span> <span class='res'>int</span> <span class='ids'>pos</span> <span class='ops'>=</span> <span class='int'>0</span>;
+
+	<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='ids'>past</span> <span class='ops'>=</span> <span class='res'>NULL</span>;
+	<span class='res'>do</span>
+	{
+		<span class='res'>if</span> (<span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span> <span class='ops'>==</span> <span class='ids'>value</span>)
+		{
+			<span class='res'>if</span> (<span class='ids'>past</span>)
+			{
+				<span class='ids'>past</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+				<span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>past</span>;
+				<span class='res'>if</span> (<span class='ids'>index</span> <span class='ops'>==</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span>)
+					<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span> <span class='ops'>=</span> <span class='ids'>past</span>;
+			}
+			<span class='res'>else</span>
+			{
+				<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+				<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span>;
+				<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+			}
+			<span class='ids'>cpy</span> <span class='ops'>=</span> <span class='ids'>index</span>;
+			<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+			
+			<span class='res'>printf</span>(<span class='str'>"%sThe node[%s%s%hd%s%s] was deleted, with value%s %s%d%s\n\n"</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>pos</span><span class='ops'>+</span><span class='int'>1</span>, <span class='ids'>END</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span>, <span class='ids'>END</span>);
+			<span class='fun'>free</span>(<span class='ids'>cpy</span>);
+		}
+		<span class='res'>else</span>
+		{
+			<span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>index</span>;
+			<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+			<span class='ids'>pos</span><span class='ops'>++</span>;
+		}
+	} <span class='res'>while</span>(<span class='ids'>index</span> <span class='ops'>!=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>);
+}
+
+<span class='com'>//Function 5 delete the entire circular list</span>
+<span class='com'>//Prints all the elements in the list with a tab between them</span>
+<span class='res'>void</span>	<span class='fun'>freeCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>)
+{
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>index</span>, <span class='ops'>*</span><span class='ids'>temp</span>;
+
+	<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='res'>do</span>
+	{
+		<span class='ids'>temp</span> <span class='ops'>=</span> <span class='ids'>index</span>;
+		<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+		<span class='fun'>free</span>(<span class='ids'>temp</span>);
+	} <span class='res'>while</span> (<span class='ids'>index</span> <span class='ops'>!=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>);
+	<span class='res'>printf</span>(<span class='str'>"%s\nThe list is empty%s\n\n"</span>, <span class='ids'>GRN</span>, <span class='ids'>END</span>);
+	<span class='fun'>free</span>(<span class='ids'>lst</span>);
+	<span class='ids'>lst</span> <span class='ops'>=</span> <span class='res'>NULL</span>;
+}
+<span class='com'>//Function 6 search for a node </span>
+<span class='com'>//Prints all the times a specific value is found and its position, and returns the number.</span>
+<span class='res'>int</span>		<span class='fun'>searchCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>, <span class='res'>int</span> <span class='ids'>value</span>)
+{
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>index</span>;
+	<span class='res'>short</span> <span class='res'>int</span>		<span class='ids'>times</span>;
+	<span class='res'>short</span> <span class='res'>int</span>		<span class='ids'>pos</span>;
+
+	<span class='ids'>times</span> <span class='ops'>=</span> <span class='int'>0</span>;
+	<span class='ids'>pos</span> <span class='ops'>=</span> <span class='int'>0</span>;
+	<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='res'>do</span>
+	{
+		<span class='res'>if</span> (<span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span> <span class='ops'>==</span> <span class='ids'>value</span>)
+		{
+			<span class='ids'>times</span><span class='ops'>++</span>;
+			<span class='res'>printf</span>(<span class='str'>"%sFound %s%s%d%s %son position%s %s%hd%s\n"</span>, <span class='ids'>CYN</span>, <span class='ids'>END</span>, <span class='ids'>BAK</span>, <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>END</span>, <span class='ids'>BAK</span>, <span class='ids'>pos</span>, <span class='ids'>END</span>);
+		}
+		<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+		<span class='ids'>pos</span><span class='ops'>++</span>;
+	} <span class='res'>while</span> (<span class='ids'>index</span> <span class='ops'>!=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>);
+	<span class='res'>return</span> (<span class='ids'>times</span>);
+}
+
+<span class='com'>//Fuction 7 circular list is empty</span>
+<span class='com'>//Returns 1 if the list is empty, 0 if not.</span>
+<span class='res'>int</span>		<span class='fun'>emptyCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>)
+{
+	<span class='res'>if</span> (<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span> <span class='ops'>==</span> <span class='res'>NULL</span>)
+		<span class='res'>return</span> <span class='int'>1</span>;
+	<span class='res'>return</span> <span class='int'>0</span>;
+}
+<span class='com'>//Function 8 find the number of nodes</span>
+<span class='com'>//Returns the size of the list.</span>
+<span class='res'>int</span>		<span class='fun'>sizeCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>)
+{
+	<span class='res'>if</span>(<span class='fun'>emptyCircular</span>(<span class='ids'>lst</span>) <span class='ops'>==</span> <span class='int'>1</span>)
+		<span class='res'>return</span> <span class='int'>0</span>;
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>index</span>;
+	<span class='res'>short</span> <span class='res'>int</span> <span class='ids'>size</span> <span class='ops'>=</span> <span class='int'>0</span>;
+
+	<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='res'>do</span>
+	{
+		<span class='ids'>size</span><span class='ops'>++</span>;
+		<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+	} <span class='res'>while</span> (<span class='ids'>index</span> <span class='ops'>!=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>);
+	<span class='res'>return</span> <span class='ids'>size</span>;
+}
+
+<span class='com'>//Initiates a new circular list.</span>
+<span class='ids'>t_circular</span>	<span class='ops'>*</span><span class='fun'>initCircular</span>(<span class='res'>void</span>)
+{
+	<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>new</span>;
+
+	<span class='ids'>new</span> <span class='ops'>=</span> (<span class='ids'>t_circular</span> <span class='ops'>*</span>)<span class='fun'>malloc</span>(<span class='res'>sizeof</span>(<span class='ids'>t_circular</span>);
+	<span class='ids'>new</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span> <span class='ops'>=</span> <span class='res'>NULL</span>;
+	<span class='ids'>new</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span> <span class='ops'>=</span> <span class='res'>NULL</span>;
+	<span class='res'>return</span> (<span class='ids'>new</span>);
+}
+
+<span class='com'>//Returns the average of the values in the list.</span>
+<span class='res'>void</span>	<span class='fun'>avgCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>)
+{
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>index</span>;
+	<span class='res'>double</span>	<span class='ids'>avg</span>;
+	<span class='res'>double</span>	<span class='ids'>count</span>;
+
+	<span class='ids'>avg</span> <span class='ops'>=</span> <span class='int'>0</span>;
+	<span class='ids'>count</span> <span class='ops'>=</span> <span class='int'>0</span>;
+	<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='res'>do</span>
+	{
+		<span class='ids'>avg</span> <span class='ops'>+=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span>;
+		<span class='ids'>count</span><span class='ops'>++</span>;
+		<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+	} <span class='res'>while</span> (<span class='ids'>index</span> <span class='ops'>!=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>);
+	<span class='res'>printf</span>(<span class='str'>"%sThe average of the circular list is:%s %s%5.2f%s \n"</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, (<span class='ids'>avg</span><span class='ops'>/</span><span class='ids'>count</span>), <span class='ids'>END</span>);
+}
+
+<span class='com'>//Prints all the elements in the list with a tab between them</span>
+<span class='res'>void</span>	<span class='fun'>printCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>)
+{
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>index</span>;
+
+	<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='res'>do</span>
+	{
+		<span class='res'>printf</span>(<span class='str'>"%s<-%s%s%d%s%s->%s\t"</span>, <span class='ids'>RED</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span>, <span class='ids'>END</span>, <span class='ids'>MAG</span>, <span class='ids'>END</span>);
+		<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+	} <span class='res'>while</span> (<span class='ids'>index</span> <span class='ops'>!=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>);
+	<span class='res'>printf</span>(<span class='str'>"\n"</span>);
+}
+
+<span class='res'>#include</span> <span class='str'>"structures.h"</span>
+
+<span class='com'>//Fuction 1 add node</span>
+<span class='com'>//Adds the value to the start of the list.</span>
+<span class='res'>void</span>	<span class='fun'>addfirstCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>, <span class='res'>int</span> <span class='ids'>value</span>)
+{
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>new</span>;
+
+	<span class='ids'>new</span> <span class='ops'>=</span> (<span class='ids'>t_dlist</span> <span class='ops'>*</span>)<span class='fun'>malloc</span>(<span class='res'>sizeof</span>(<span class='ids'>t_dlist</span>);
+	<span class='res'>if</span> (<span class='ids'>new</span> <span class='ops'>==</span> <span class='res'>NULL</span>)
+	{
+		<span class='res'>printf</span>(<span class='str'>"%sError while allocating memory for node%s\n"</span>, <span class='ids'>RED</span>, <span class='ids'>END</span>);
+		<span class='res'>return</span>;
+	}
+	<span class='res'>printf</span>(<span class='str'>"%sThe value%s %s%d%s %shas been added to the top of the circular list.%s\n\n"</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>value</span>, <span class='ids'>END</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>);
+	<span class='ids'>new</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span> <span class='ops'>=</span> <span class='ids'>value</span>;
+
+	<span class='res'>if</span> (<span class='fun'>emptyCircular</span>(<span class='ids'>lst</span>) <span class='ops'>==</span> <span class='int'>1</span>)
+		<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span> <span class='ops'>=</span> <span class='ids'>new</span>;
+	<span class='res'>else</span>
+		<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>new</span>;
+
+	<span class='ids'>new</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span> <span class='ops'>=</span> <span class='ids'>new</span>;
+	<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span>;
+	
+}
+<span class='com'>//Adds value in middle of the list</span>
+<span class='res'>void</span>	<span class='fun'>addMiddleCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>, <span class='res'>int</span> <span class='ids'>value</span>)
+{
+	<span class='res'>short</span> <span class='res'>int</span> <span class='ids'>counter</span> <span class='ops'>=</span> <span class='fun'>sizeCircular</span>(<span class='ids'>lst</span>);
+	<span class='res'>if</span>(<span class='ids'>counter</span> <span class='ops'>==</span> <span class='int'>0</span>)
+	{
+		<span class='fun'>addfirstCircular</span>(<span class='ids'>lst</span>, <span class='ids'>value</span>);
+		<span class='res'>return</span>;
+			
+	}
+	<span class='res'>else</span> <span class='res'>if</span>( <span class='ids'>counter</span> <span class='ops'>==</span> <span class='int'>1</span>)
+	{
+		<span class='fun'>addlastCircular</span>(<span class='ids'>lst</span>,<span class='ids'>value</span>);
+		<span class='res'>return</span>;
+	}
+	
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>new</span>;
+	<span class='ids'>t_dlist</span> <span class='ops'>*</span><span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='ids'>t_dlist</span> <span class='ops'>*</span><span class='ids'>inext</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+	
+	<span class='res'>short</span> <span class='res'>int</span> <span class='ids'>i</span> <span class='ops'>=</span> <span class='int'>1</span>;
+
+	<span class='ids'>new</span> <span class='ops'>=</span> (<span class='ids'>t_dlist</span> <span class='ops'>*</span>)<span class='fun'>malloc</span>(<span class='res'>sizeof</span>(<span class='ids'>t_dlist</span>); 
+
+	<span class='res'>if</span> (<span class='ids'>new</span> <span class='ops'>==</span> <span class='res'>NULL</span>)
+	{
+		<span class='res'>printf</span>(<span class='str'>"%sError while allocating memory for node%s\n"</span>, <span class='ids'>RED</span>, <span class='ids'>END</span>);
+		<span class='res'>return</span>;
+	}
+	<span class='res'>printf</span>(<span class='str'>"%sThe value%s %s%d%s %shas been added in the middle of the circular list.%s\n\n"</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>value</span>, <span class='ids'>END</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>);
+	<span class='ids'>new</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span> <span class='ops'>=</span> <span class='ids'>value</span>;
+
+		<span class='res'>while</span>(<span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>!=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span> <span class='ops'>&&</span> <span class='ids'>i</span> <span class='ops'><</span> (<span class='ids'>counter</span><span class='ops'>/</span><span class='int'>2</span>)
+		{
+			<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+			<span class='ids'>inext</span> <span class='ops'>=</span> <span class='ids'>inext</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+			<span class='ids'>i</span><span class='ops'>++</span>;
+		}
+		<span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>new</span>;
+		<span class='ids'>new</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>index</span>;
+		<span class='ids'>inext</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>new</span>;
+		<span class='ids'>new</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>inext</span>;  
+}
+
+<span class='com'>//Adds the value to the end of the list.</span>
+<span class='res'>void</span>	<span class='fun'>addlastCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>, <span class='res'>int</span> <span class='ids'>value</span>)
+{
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>new</span>;
+
+	<span class='ids'>new</span> <span class='ops'>=</span> (<span class='ids'>t_dlist</span> <span class='ops'>*</span>)<span class='fun'>malloc</span>(<span class='res'>sizeof</span>(<span class='ids'>t_dlist</span>);
+	<span class='res'>if</span> (<span class='ids'>new</span> <span class='ops'>==</span> <span class='res'>NULL</span>)
+	{
+		<span class='res'>printf</span>(<span class='str'>"%sError while allocating memory for node%s\n"</span>, <span class='ids'>RED</span>, <span class='ids'>END</span>);
+		<span class='res'>return</span>;
+	}
+
+	<span class='res'>printf</span>(<span class='str'>"%sThe value%s %s%d%s %shas been added to the end of the circular list.%s\n\n"</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>value</span>, <span class='ids'>END</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>);
+	<span class='ids'>new</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span> <span class='ops'>=</span> <span class='ids'>value</span>;
+	
+	<span class='res'>if</span> (<span class='fun'>emptyCircular</span>(<span class='ids'>lst</span>) <span class='ops'>==</span> <span class='int'>1</span>)
+		<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span> <span class='ops'>=</span> <span class='ids'>new</span>;
+	<span class='res'>else</span>
+		<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>new</span>;
+
+	<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span> <span class='ops'>=</span> <span class='ids'>new</span>;
+	<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span>;
+}
+
+<span class='com'>//Function 2 add multiple consecutive nodes</span>
+<span class='res'>void</span>    <span class='fun'>addMultipleCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>){
+    <span class='res'>short</span> <span class='res'>int</span> <span class='ids'>counter</span>, <span class='ids'>value</span>, <span class='ids'>i</span>,<span class='ids'>select</span>;
+    <span class='res'>printf</span>(<span class='str'>"\n%sHow many nodes you want to add? %s"</span>, <span class='ids'>BLU</span>, <span class='ids'>END</span>);
+    <span class='fun'>scanf</span>(<span class='str'>"%hd"</span>,<span class='ops'>&</span><span class='ids'>counter</span>);
+	<span class='res'>printf</span>(<span class='str'>"\n%sWhere do you want to put the nodes:%s \n%s1) Start%s \n%s2) Middle%s \n%s3) End%s\n"</span>, <span class='ids'>BLU</span>, <span class='ids'>END</span>, <span class='ids'>MAG</span>, <span class='ids'>END</span>, <span class='ids'>YEL</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>END</span>);
+	<span class='fun'>scanf</span>(<span class='str'>"%hd"</span>,<span class='ops'>&</span><span class='ids'>select</span>);
+    <span class='res'>for</span> (<span class='ids'>i</span> <span class='ops'>=</span> <span class='int'>0</span>; <span class='ids'>i</span> <span class='ops'><</span> <span class='ids'>counter</span>; <span class='ops'>++</span><span class='ids'>i</span>)
+    {
+        <span class='res'>printf</span>(<span class='str'>"%sWhat is the value of the node %hd: %s"</span>, <span class='ids'>BAK</span>, <span class='ids'>i</span><span class='ops'>+</span><span class='int'>1</span>, <span class='ids'>END</span>);
+        <span class='fun'>scanf</span>(<span class='str'>"%hd"</span>,<span class='ops'>&</span><span class='ids'>value</span>);
+        <span class='res'>if</span>(<span class='ids'>select</span> <span class='ops'>==</span> <span class='int'>1</span>)
+			<span class='fun'>addfirstCircular</span>(<span class='ids'>lst</span>,<span class='ids'>value</span>);
+		<span class='res'>else</span> <span class='res'>if</span>(<span class='ids'>select</span> <span class='ops'>==</span> <span class='int'>2</span>)
+			<span class='fun'>addMiddleCircular</span>(<span class='ids'>lst</span>,<span class='ids'>value</span>);
+		<span class='res'>else</span> <span class='res'>if</span>(<span class='ids'>select</span> <span class='ops'>==</span> <span class='int'>3</span>)
+			<span class='fun'>addlastCircular</span>(<span class='ids'>lst</span>,<span class='ids'>value</span>);
+		<span class='res'>else</span>
+		{
+			<span class='res'>printf</span>(<span class='str'>"%sThe number you have chosen is not in the options\n\n%s"</span>, <span class='ids'>RED</span>, <span class='ids'>END</span>);
+			<span class='res'>break</span>;
+		}
+	}   
+}
+
+<span class='com'>//Function 3 delete a node</span>
+<span class='com'>//Deletes the first time a specific value is found in the list.</span>
+<span class='res'>void</span>	<span class='fun'>delCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>, <span class='res'>int</span> <span class='ids'>value</span>)
+{
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>index</span>;
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>past</span>;
+	<span class='res'>short</span> <span class='res'>int</span> <span class='ids'>pos</span> <span class='ops'>=</span> <span class='int'>0</span>;
+
+	<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='ids'>past</span> <span class='ops'>=</span> <span class='res'>NULL</span>;
+	<span class='res'>do</span>
+	{
+		<span class='res'>if</span> (<span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span> <span class='ops'>==</span> <span class='ids'>value</span>)
+		{
+			<span class='res'>if</span> (<span class='ids'>past</span>)
+			{
+				<span class='ids'>past</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+				<span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>past</span>;
+				<span class='res'>if</span> (<span class='ids'>index</span> <span class='ops'>==</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span>)
+					<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span> <span class='ops'>=</span> <span class='ids'>past</span>;
+			}
+			<span class='res'>else</span>
+			{
+				<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+				<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span>;
+				<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+			}
+			<span class='res'>printf</span>(<span class='str'>"%sThe node[%s%s%hd%s%s] was deleted, with value%s %s%d%s\n\n"</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>pos</span><span class='ops'>+</span><span class='int'>1</span>, <span class='ids'>END</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span>, <span class='ids'>END</span>);
+			<span class='fun'>free</span>(<span class='ids'>index</span>);
+			<span class='res'>return</span>;
+		}
+		<span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>index</span>;
+		<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+		<span class='ids'>pos</span><span class='ops'>++</span>;
+	} <span class='res'>while</span>(<span class='ids'>index</span> <span class='ops'>!=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>);
+}
+
+<span class='com'>//Function 4 a delete multiple nodes</span>
+<span class='com'>//Deletes all the times a specific value is found in the list.</span>
+<span class='res'>void</span>	<span class='fun'>delallCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>, <span class='res'>int</span> <span class='ids'>value</span>)
+{
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>index</span>;
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>past</span>;
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>cpy</span>;
+	<span class='res'>short</span> <span class='res'>int</span> <span class='ids'>pos</span> <span class='ops'>=</span> <span class='int'>0</span>;
+
+	<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='ids'>past</span> <span class='ops'>=</span> <span class='res'>NULL</span>;
+	<span class='res'>do</span>
+	{
+		<span class='res'>if</span> (<span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span> <span class='ops'>==</span> <span class='ids'>value</span>)
+		{
+			<span class='res'>if</span> (<span class='ids'>past</span>)
+			{
+				<span class='ids'>past</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+				<span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>past</span>;
+				<span class='res'>if</span> (<span class='ids'>index</span> <span class='ops'>==</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span>)
+					<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span> <span class='ops'>=</span> <span class='ids'>past</span>;
+			}
+			<span class='res'>else</span>
+			{
+				<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+				<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span>;
+				<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+			}
+			<span class='ids'>cpy</span> <span class='ops'>=</span> <span class='ids'>index</span>;
+			<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+			
+			<span class='res'>printf</span>(<span class='str'>"%sThe node[%s%s%hd%s%s] was deleted, with value%s %s%d%s\n\n"</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>pos</span><span class='ops'>+</span><span class='int'>1</span>, <span class='ids'>END</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span>, <span class='ids'>END</span>);
+			<span class='fun'>free</span>(<span class='ids'>cpy</span>);
+		}
+		<span class='res'>else</span>
+		{
+			<span class='ids'>past</span> <span class='ops'>=</span> <span class='ids'>index</span>;
+			<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+			<span class='ids'>pos</span><span class='ops'>++</span>;
+		}
+	} <span class='res'>while</span>(<span class='ids'>index</span> <span class='ops'>!=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>);
+}
+
+<span class='com'>//Function 5 delete the entire circular list</span>
+<span class='com'>//Prints all the elements in the list with a tab between them</span>
+<span class='res'>void</span>	<span class='fun'>freeCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>)
+{
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>index</span>, <span class='ops'>*</span><span class='ids'>temp</span>;
+
+	<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='res'>do</span>
+	{
+		<span class='ids'>temp</span> <span class='ops'>=</span> <span class='ids'>index</span>;
+		<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+		<span class='fun'>free</span>(<span class='ids'>temp</span>);
+	} <span class='res'>while</span> (<span class='ids'>index</span> <span class='ops'>!=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>);
+	<span class='res'>printf</span>(<span class='str'>"%s\nThe list is empty%s\n\n"</span>, <span class='ids'>GRN</span>, <span class='ids'>END</span>);
+	<span class='fun'>free</span>(<span class='ids'>lst</span>);
+	<span class='ids'>lst</span> <span class='ops'>=</span> <span class='res'>NULL</span>;
+}
+<span class='com'>//Function 6 search for a node </span>
+<span class='com'>//Prints all the times a specific value is found and its position, and returns the number.</span>
+<span class='res'>int</span>		<span class='fun'>searchCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>, <span class='res'>int</span> <span class='ids'>value</span>)
+{
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>index</span>;
+	<span class='res'>short</span> <span class='res'>int</span>		<span class='ids'>times</span>;
+	<span class='res'>short</span> <span class='res'>int</span>		<span class='ids'>pos</span>;
+
+	<span class='ids'>times</span> <span class='ops'>=</span> <span class='int'>0</span>;
+	<span class='ids'>pos</span> <span class='ops'>=</span> <span class='int'>0</span>;
+	<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='res'>do</span>
+	{
+		<span class='res'>if</span> (<span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span> <span class='ops'>==</span> <span class='ids'>value</span>)
+		{
+			<span class='ids'>times</span><span class='ops'>++</span>;
+			<span class='res'>printf</span>(<span class='str'>"%sFound %s%s%d%s %son position%s %s%hd%s\n"</span>, <span class='ids'>CYN</span>, <span class='ids'>END</span>, <span class='ids'>BAK</span>, <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>END</span>, <span class='ids'>BAK</span>, <span class='ids'>pos</span>, <span class='ids'>END</span>);
+		}
+		<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+		<span class='ids'>pos</span><span class='ops'>++</span>;
+	} <span class='res'>while</span> (<span class='ids'>index</span> <span class='ops'>!=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>);
+	<span class='res'>return</span> (<span class='ids'>times</span>);
+}
+
+<span class='com'>//Fuction 7 circular list is empty</span>
+<span class='com'>//Returns 1 if the list is empty, 0 if not.</span>
+<span class='res'>int</span>		<span class='fun'>emptyCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>)
+{
+	<span class='res'>if</span> (<span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span> <span class='ops'>==</span> <span class='res'>NULL</span>)
+		<span class='res'>return</span> <span class='int'>1</span>;
+	<span class='res'>return</span> <span class='int'>0</span>;
+}
+<span class='com'>//Function 8 find the number of nodes</span>
+<span class='com'>//Returns the size of the list.</span>
+<span class='res'>int</span>		<span class='fun'>sizeCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>)
+{
+	<span class='res'>if</span>(<span class='fun'>emptyCircular</span>(<span class='ids'>lst</span>) <span class='ops'>==</span> <span class='int'>1</span>)
+		<span class='res'>return</span> <span class='int'>0</span>;
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>index</span>;
+	<span class='res'>short</span> <span class='res'>int</span> <span class='ids'>size</span> <span class='ops'>=</span> <span class='int'>0</span>;
+
+	<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='res'>do</span>
+	{
+		<span class='ids'>size</span><span class='ops'>++</span>;
+		<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+	} <span class='res'>while</span> (<span class='ids'>index</span> <span class='ops'>!=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>);
+	<span class='res'>return</span> <span class='ids'>size</span>;
+}
+
+<span class='com'>//Initiates a new circular list.</span>
+<span class='ids'>t_circular</span>	<span class='ops'>*</span><span class='fun'>initCircular</span>(<span class='res'>void</span>)
+{
+	<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>new</span>;
+
+	<span class='ids'>new</span> <span class='ops'>=</span> (<span class='ids'>t_circular</span> <span class='ops'>*</span>)<span class='fun'>malloc</span>(<span class='res'>sizeof</span>(<span class='ids'>t_circular</span>);
+	<span class='ids'>new</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span> <span class='ops'>=</span> <span class='res'>NULL</span>;
+	<span class='ids'>new</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>last</span> <span class='ops'>=</span> <span class='res'>NULL</span>;
+	<span class='res'>return</span> (<span class='ids'>new</span>);
+}
+
+<span class='com'>//Returns the average of the values in the list.</span>
+<span class='res'>void</span>	<span class='fun'>avgCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>)
+{
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>index</span>;
+	<span class='res'>double</span>	<span class='ids'>avg</span>;
+	<span class='res'>double</span>	<span class='ids'>count</span>;
+
+	<span class='ids'>avg</span> <span class='ops'>=</span> <span class='int'>0</span>;
+	<span class='ids'>count</span> <span class='ops'>=</span> <span class='int'>0</span>;
+	<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='res'>do</span>
+	{
+		<span class='ids'>avg</span> <span class='ops'>+=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span>;
+		<span class='ids'>count</span><span class='ops'>++</span>;
+		<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+	} <span class='res'>while</span> (<span class='ids'>index</span> <span class='ops'>!=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>);
+	<span class='res'>printf</span>(<span class='str'>"%sThe average of the circular list is:%s %s%5.2f%s \n"</span>, <span class='ids'>BAK</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, (<span class='ids'>avg</span><span class='ops'>/</span><span class='ids'>count</span>), <span class='ids'>END</span>);
+}
+
+<span class='com'>//Prints all the elements in the list with a tab between them</span>
+<span class='res'>void</span>	<span class='fun'>printCircular</span>(<span class='ids'>t_circular</span> <span class='ops'>*</span><span class='ids'>lst</span>)
+{
+	<span class='ids'>t_dlist</span>	<span class='ops'>*</span><span class='ids'>index</span>;
+
+	<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>;
+	<span class='res'>do</span>
+	{
+		<span class='res'>printf</span>(<span class='str'>"%s<-%s%s%d%s%s->%s\t"</span>, <span class='ids'>RED</span>, <span class='ids'>END</span>, <span class='ids'>CYN</span>, <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>value</span>, <span class='ids'>END</span>, <span class='ids'>MAG</span>, <span class='ids'>END</span>);
+		<span class='ids'>index</span> <span class='ops'>=</span> <span class='ids'>index</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>next</span>;
+	} <span class='res'>while</span> (<span class='ids'>index</span> <span class='ops'>!=</span> <span class='ids'>lst</span><span class='ops'>-</span><span class='ops'>></span><span class='ids'>first</span>);
+	<span class='res'>printf</span>(<span class='str'>"\n"</span>);
+}
+	</pre>
+</body>
+</html>

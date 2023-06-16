@@ -17,9 +17,17 @@ defmodule Highlighting do
   @comment ~r/^\/\/.*/
   @whitespace ~r/^\s+/
   @anyother ~r/^./
-  @start "<html>\n<head>\n\t<link rel='stylesheet' href='base/StylesOfHighlighter.css'>\n</head>\n<body>\n\t<pre>\n"
+  @start "<html>\n<head>\n\t<link rel='stylesheet' href='../base/StylesOfHighlighter.css'>\n</head>\n<body>\n\t<pre>\n"
   @final "\n\t</pre>\n</body>\n</html>\n"
-
+  
+  
+  def concur_token_file(list) do
+    list
+    |> Enum.map(fn {in_file, out_file} -> 
+      Task.async(fn -> token_file(in_file, out_file) end) end)
+    |> Enum.map(fn task -> 
+      Task.await(task, :infinity) end) 
+  end
   @doc """
   Function that reads a file, line by line and returns all 
   """
@@ -35,6 +43,8 @@ defmodule Highlighting do
   @doc """
   Function to check what tokens you have in a string
   """
+  
+
   def get_tokens(in_string), do: token(in_string, [])
 
   defp token(in_string, list) do

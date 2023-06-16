@@ -17,8 +17,17 @@ defmodule Highlighting do
   @comment ~r/^\/\/.*/
   @whitespace ~r/^\s+/
   @anyother ~r/^./
-  @start "<html>\n<head>\n\t<link rel='stylesheet' href='base/StylesOfHighlighter.css'>\n</head>\n<body>\n\t<pre>\n"
+  @start "<html>\n<head>\n\t<link rel='stylesheet' href='../base/StylesOfHighlighter.css'>\n</head>\n<body>\n\t<pre>\n"
   @final "\n\t</pre>\n</body>\n</html>\n"
+
+
+  def sec_token_file(list), do: do_sec_token_file(list)
+
+  defp do_sec_token_file([]), do: :ok
+  defp do_sec_token_file([{in_file, out_file} | tail]) do
+    token_file(in_file, out_file)
+    do_sec_token_file(tail)
+  end
 
   @doc """
   Function that reads a file, line by line and returns all 
